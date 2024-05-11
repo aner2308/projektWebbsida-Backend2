@@ -43,3 +43,16 @@ async function getData() {
         console.error("Något gick fel: ", error);
     }
 }
+
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
+    document.querySelector(".logotyp img").style.width = "20vw"; // Förminskar logotypens bredd till 30% av viewportens bredd när man scrollar ner
+    document.getElementById("header").style.backgroundColor = "rgba(255, 0, 0, 0.7)";
+  } else {
+    document.querySelector(".logotyp img").style.width = "50vw"; // Återställer logotypens bredd till 50% av viewportens bredd när man scrollar uppåt till toppen
+    document.getElementById("header").style.backgroundColor = "rgba(255, 0, 0, 1)";
+  }
+}
+
