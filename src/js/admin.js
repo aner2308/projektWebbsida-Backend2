@@ -33,13 +33,14 @@ async function getData() {
                 const formateratDatum = datum.toISOString().split('T')[0];
 
                 article.innerHTML = `
-                <h3>${menuItem.name}</h3>
+                <h3><span class="name">${menuItem.name}</span></h3>
                 <p>Tillagd: ${formateratDatum}</p>
-                <p>Beskrivning: ${menuItem.description}</p>
-                <p>Kategori: ${menuItem.category}</p>
-                <p>Underkategori: ${menuItem.subcategory}</p>
-                <p><strong>Pris: ${menuItem.price}</strong></p>
-                <button class="deleteBtn">Radera</button>`;
+                <p>Beskrivning: <span class="description">${menuItem.description}</span></p>
+                <p>Kategori: <span class="category">${menuItem.category}</span></p>
+                <p>Underkategori: <span class="subcategory">${menuItem.subcategory}</span></p>
+                <p><strong>Pris: <span class="price">${menuItem.price}</span></strong></p>
+                <button class="deleteBtn" type="button">Radera</button>
+                <button class="editBtn" type="button">Redigera</button>`;
 
                 //Lägger till menyobjektet i min menuContainer
                 menuContainer.appendChild(article);
@@ -47,12 +48,103 @@ async function getData() {
                 //Lägger till eventListener för delete knappen i articlen
                 const deleteBtn = article.querySelector(".deleteBtn");
                 deleteBtn.addEventListener("click", () => deleteMenuItem(menuItem._id));
+
+                //Lägger till eventListener för redigera knappen i articlen
+                const editBtn = article.querySelector(".editBtn");
+                editBtn.addEventListener("click", () => {
+                    const token = localStorage.getItem("token");
+
+                    if (token) {
+                        editBtn.style.display = "none";
+                        const name = article.querySelector(".name");
+                        const description = article.querySelector(".description");
+                        const price = article.querySelector(".price");
+                        const category = article.querySelector(".category");
+                        const subcategory = article.querySelector(".subcategory");
+
+                        name.innerHTML = `<input type="text" class="editName" value="${menuItem.name}">`;
+                        description.innerHTML = `<input type="text" class="editDescription" value="${menuItem.description}">`;
+                        price.innerHTML = `<input type="number" class="editPrice" value="${menuItem.price}">`;
+                        category.innerHTML = `<input type="text" class="editCategory" value="${menuItem.category}">`;
+                        subcategory.innerHTML = `<input type="text" class="editSubcategory" value="${menuItem.subcategory}">`;
+
+                        const saveBtn = document.createElement("button");
+                        saveBtn.textContent = "Spara";
+                        saveBtn.classList.add("saveBtn");
+                        saveBtn.type = "button"
+
+                        //Händelselyssnare för att spara ändringar
+                        saveBtn.addEventListener("click", () => {
+                            const newItem = {
+                                name: article.querySelector(".editName").value,
+                                description: article.querySelector(".editDescription").value,
+                                price: article.querySelector(".editPrice").value,
+                                category: article.querySelector(".editCategory").value,
+                                subcategory: article.querySelector(".editSubcategory").value,
+                            }
+
+                            updateItem(article.dataset._id, newItem)
+                                .then(() => {
+                                    name.textContent = newItem.name;
+                                    description.textContent = newItem.description;
+                                    price.textContent = newItem.price;
+                                    category.textContent = newItem.category;
+                                    subcategory.textContent = newItem.subcategory;
+
+                                    saveBtn.remove();
+                                    editBtn.style.display = "block";
+                                })
+                                .catch(error => {
+                                    console.error("Ett fel uppstod vid uppdatering av menyobjektet...", error);
+
+                                    //Återställer sidan med de gamla värdena om uppdateringen misslyckas
+                                    name.textContent = menuItem.name;
+                                    description.textContent = menuItem.description;
+                                    price.textContent = menuItem.price;
+                                    category.textContent = menuItem.category;
+                                    subcategory.textContent = menuItem.subcategory;
+
+                                    saveBtn.remove();
+                                    editBtn.style.display = "inline-block";
+                                });
+                        });
+                        article.appendChild(saveBtn);
+                    } else {
+                        console.log("Logga in för att redigera ett menyobjekt.")
+                    }
+                });
             });
         }
 
     } catch (error) {
         console.error("Något gick fel: ", error);
     }
+}
+
+//UPPDATERA ITEM!
+async function updateItem(itemId, newItem) {
+    let updateUrl = `https://projektapi-backend2.onrender.com/api/menu/${itemId}`;
+    const token = localStorage.getItem("token");
+
+    try {
+        const response = await fetch(updateUrl, {
+            method: "PUT",
+            headers: {
+                "Authorization": "Bearer " + token,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(newItem)
+        });
+
+        if (response.ok) {
+            console.log("Menyobjektet med id: " + itemId + " har uppdaterats!")
+        } else {
+            throw new Error(`Fel vid uppdatering av menyobjekt med id ${itemId}.`);
+        }
+    } catch (error) {
+        console.error("Error:", error);
+    }
+
 }
 
 //RADERA ITEM!
@@ -86,7 +178,7 @@ async function deleteMenuItem(_id) {
     }
 }
 
-//LÄGG TILL ITEM!
+//LÄGG TILL ITEM VIA FORMULÄR!
 const categorySelect = document.getElementById("category");
 const subcategorySelect = document.getElementById("subcategory");
 
@@ -103,10 +195,10 @@ categorySelect.addEventListener("change", updateSubcategories);
 function updateSubcategories() {
     const selectedCategory = categorySelect.value;
     const subcategoriesForCategory = subcategories[selectedCategory];
-    
+
     // Rensa befintliga alternativ
     subcategorySelect.innerHTML = "";
-    
+
     // Lägg till nya alternativ baserat på vald kategori
     subcategoriesForCategory.forEach(subcategory => {
         const option = document.createElement("option");
@@ -154,7 +246,7 @@ function submitForm() {
     form.reset();
 }
 
-//Skapa ny jobberfarenhet
+//Skapar nytt menuItem
 async function createMenuItem(name, category, price, description) {
 
     const url = "https://projektapi-backend2.onrender.com/api/menu";
@@ -179,3 +271,5 @@ async function createMenuItem(name, category, price, description) {
     window.location.reload();
 
 }
+
+
