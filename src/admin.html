@@ -28,23 +28,26 @@
             <div id="menuContainer"></div>
         </article>
     </main>
-    <form id="menu">
-        <label for="itemName">*Företagsnamn:</label><br>
+    <form id="menuForm">
+        <label for="itemName">Namn:</label><br>
         <input type="text" id="itemName" name="itemName"><br>
         <label for="category">Kategori:</label><br>
         <select name="category" id="category">
-            <option value="maki">maki</option>
-            <option value="nigiri">nigiri</option>
+            <option value="mat">mat</option>
             <option value="dryck">dryck</option>
             <option value="dessert">dessert</option>
-            </select>
+        </select><br>
+        <label for="subcategory">Underkategori:</label><br>
+        <select name="subcategory" id="subcategory">
+            <!-- Uppdateras av JavaScript -->
+        </select><br>
         <label for="price">Pris:</label><br>
         <input type="number" id="price" name="price"><br>
         <label for="description">*Beskrivning:</label><br>
         <textarea id="description" name="description"></textarea><br><br>
         <button type="button" id="submitBtn">Skicka</button>
     </form>
-    <div></div>
+    <div id="errorMsg"></div>
     <footer>
         <a href="index.html" id="logOut">Logga ut</a>
     </footer>
