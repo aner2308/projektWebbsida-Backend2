@@ -3,13 +3,21 @@
 
 const token = localStorage.getItem("token");
 const editMenuEl = document.getElementById("editMenu");
+const logInEl = document.getElementById("logIn");
+const logOutEl = document.getElementById("logOut");
 
 document.addEventListener("DOMContentLoaded", () => {
 
     if (token) {
         editMenuEl.style.display = "block";
+        logInEl.style.display = "none";
+        logOutEl.style.display = "block";
+        logOutEl.addEventListener("click", logOutUser);
+
     } else {
         editMenuEl.style.display = "none";
+        logInEl.style.display = "block";
+        logOutEl.style.display = "none";
     }
 
     getData();
@@ -44,15 +52,11 @@ async function getData() {
     }
 }
 
-window.onscroll = function() {scrollFunction()};
+function logOutUser() {
+    // Ta bort token från localStorage
+    localStorage.removeItem("token");
 
-function scrollFunction() {
-  if (document.body.scrollTop > 50 || document.documentElement.scrollTop > 50) {
-    document.querySelector(".logotyp img").style.width = "20vw"; // Förminskar logotypens bredd till 30% av viewportens bredd när man scrollar ner
-    document.getElementById("header").style.backgroundColor = "rgba(255, 0, 0, 0.7)";
-  } else {
-    document.querySelector(".logotyp img").style.width = "50vw"; // Återställer logotypens bredd till 50% av viewportens bredd när man scrollar uppåt till toppen
-    document.getElementById("header").style.backgroundColor = "rgba(255, 0, 0, 1)";
-  }
+    // Återgå till startsidan
+    location.reload();
 }
 

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="sv">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/stylesheet.css">
+    <title>Login</title>
+    <script src="js/login.js" type="module"></script>
+</head>
+
+<body>
+    <header>
+        <div class="header">
+            <a href="index.html" class="logotyp"><img src="img/Leafy.svg" alt="logotyp"></a>
+            <div class="header-right">
+                <a href="index.html" class="NotActive link">Startsidan</a>
+                <a href="index.html" id="jobbsida" class="notActive link">Meny</a>
+                <a href="index.html" id="about" class="notActive link">Om oss</a>
+                <a href="index.html" id="logOut" class="notActive link">Hitta hit</a>
+                <a href="login.html" id="logIn" class="active link">Admin login</a>
+            </div>
+        </div>
+    </header>
+    <main>
+        
+        <form id="loginForm">
+            <h2>Logga in</h2>
+            <label for="username">Användarnamn:</label>
+            <br>
+            <input type="text" id="username" name="username" required>
+            <br>
+            <br>
+            <label for="password">Lösenord:</label>
+            <br>
+            <input type="password" id="password" name="password" required>
+            <br>
+            <br>
+            <button type="submit" class="submitBtn">Logga in</button>
+        </form>
+
+        <h2 id="registrationMessage" style="display: none;">Ditt konto har skapats! Vänligen logga in med dina nya
+            uppgifter för att fortsätta.</h2>
+    </main>
+    <footer>
+
+    </footer>
+</body>
+
+</html>

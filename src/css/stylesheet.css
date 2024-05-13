@@ -1,33 +1,71 @@
 body {
+    min-height: 100vh;
     margin: 0;
-    min-height: 200vh;
+    font-family: Arial, Helvetica, sans-serif;
 }
 
-#header {
-    width: 100%;
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    background-color: rgba(255, 0, 0, 0.7);
-    position: fixed;
-    font-size: 1.6em;
+h1 {
     text-align: center;
-    margin: 0;
-    top: 0;
-    transition: 0.2s;
 }
 
-.logotyp img{
-    display: block;
-    grid-area: 2/1/3/2; 
-    width: 50vw;
-    margin: 5vw auto;
-    transition: width 0.2s;
+h2 {
+    text-align: center;
+}
+
+.header {
+    overflow: hidden;
+    background-color: rgba(255, 255, 255, 0.8);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(0, 0, 0, 0.2);
+    padding: 20px 10px;
+}
+
+.header .link {
+    float: left;
+    color: black;
+    text-align: center;
+    padding: 12px;
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 25px;
+    border-radius: 4px;
+}
+
+.header .notActive:hover {
+    background-color: #ddd;
+    color: black;
+}
+
+img {
+    height: 40px;
+    padding: 0;
+    transition: transform 0.2s;
+}
+
+img:hover {
+    transform: scale(1.1, 1.1);
+}
+
+.header a.active {
+    background-image: url('/src/img/background.jpg');
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: left center;
+    color: white;
 }
 
 .header-right {
-    grid-area: 1/1/2/2;
-    width: 100%;
-    margin: 0;
+    float: right;
+}
+
+@media screen and (max-width: 610px) {
+    .header .link {
+        float: none;
+        display: block;
+        text-align: left;
+    }
+
+    .header-right {
+        float: none;
+    }
 
 }
