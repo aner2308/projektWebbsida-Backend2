@@ -14,8 +14,10 @@ h2 {
 
 .header {
     overflow: hidden;
+    position: fixed;
+    width: 100%;
+    height: 50px;
     background-color: rgba(255, 255, 255, 0.8);
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2), inset 0 2px 10px rgba(0, 0, 0, 0.2);
     padding: 20px 10px;
 }
 
@@ -56,6 +58,65 @@ img:hover {
 .header-right {
     float: right;
 }
+
+/* Lägg till grundläggande styling för fliksystemet */
+.tabs {
+    overflow: hidden;
+    background-color: #f1f1f1;
+    border-bottom: 1px solid #ccc;
+}
+
+/* Stil för varje flik */
+.tabs button {
+    background-color: inherit;
+    float: left;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 14px 16px;
+    transition: 0.3s;
+    font-size: 17px;
+}
+
+/* Byter bakgrundsfärg på fliken vid hovring */
+.tabs button:hover {
+    background-color: #ddd;
+}
+
+/* Aktiv flik */
+.tabs button.active {
+    background-color: #ccc;
+}
+
+/* Stil för innehållet i varje flik */
+.tabcontent {
+    display: none;
+    padding: 20px;
+    border-top: none;
+}
+
+.tabcontent#mat {
+    display: block;
+}
+
+/* Stil för menypunkterna */
+#menuContainer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.tabcontent article {
+    background: #fff;
+    margin: 10px;
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    max-width: 600px;
+    width: 100%;
+}
+
 
 @media screen and (max-width: 610px) {
     .header .link {

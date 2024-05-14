@@ -21,6 +21,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
     getData();
+    openMenu(event, 'mat');
 });
 
 //Hämtar in data från databasen
@@ -62,6 +63,7 @@ async function getData() {
     }
 }
 
+//logga ut admin
 function logOutUser() {
     // Ta bort token från localStorage
     localStorage.removeItem("token");
@@ -70,3 +72,22 @@ function logOutUser() {
     location.reload();
 }
 
+//Hämtar in knapparna för mina matflikar
+document.getElementById("matBtn").addEventListener("click", () => openMenu(event, 'mat'));
+document.getElementById("dryckBtn").addEventListener("click", () => openMenu(event, 'dryck'));
+document.getElementById("dessertBtn").addEventListener("click", () => openMenu(event, 'dessert'));
+
+//Bläddrar mellan menyerna
+function openMenu(evt, menuName) {
+    var i, tabcontent, tablinks;
+    tabcontent = document.getElementsByClassName("tabcontent");
+    for (i = 0; i < tabcontent.length; i++) {
+        tabcontent[i].style.display = "none";
+    }
+    tablinks = document.getElementsByClassName("tablinks");
+    for (i = 0; i < tablinks.length; i++) {
+        tablinks[i].className = tablinks[i].className.replace(" active", "");
+    }
+    document.getElementById(menuName).style.display = "block";
+    evt.currentTarget.className += " active";
+}
