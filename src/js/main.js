@@ -30,8 +30,10 @@ async function getData() {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        const menuContainer = document.getElementById("menuContainer");
-        
+        const matContainer = document.getElementById("mat");
+        const dryckContainer = document.getElementById("dryck");
+        const dessertContainer = document.getElementById("dessert");
+
 
         if (response.ok) {
             //Loopa igenom datan och skapa article- element för varje jobberfrenhet
@@ -43,7 +45,15 @@ async function getData() {
                 <p>${menuItem.description}</p>
                 <p><strong>Pris: ${menuItem.price}</strong></p>
                 `;
-                menuContainer.appendChild(article);
+
+                // Lägger till menyobjektet i rätt kategori-container
+                if (menuItem.category === "mat") {
+                    matContainer.appendChild(article);
+                } else if (menuItem.category === "dryck") {
+                    dryckContainer.appendChild(article);
+                } else if (menuItem.category === "dessert") {
+                    dessertContainer.appendChild(article);
+                }
             });
         }
 

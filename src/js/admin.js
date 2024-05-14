@@ -18,38 +18,44 @@ async function getData() {
     try {
         const response = await fetch(url);
         const data = await response.json();
-        const menuContainer = document.getElementById("menuContainer");
-
+        const matContainer = document.getElementById("mat");
+        const dryckContainer = document.getElementById("dryck");
+        const dessertContainer = document.getElementById("dessert");
 
         if (response.ok) {
-            //Loopa igenom datan och skapa article- element för varje jobberfrenhet
+            // Loopa igenom datan och skapa article-element för varje menuItem
             data.forEach(menuItem => {
-
                 const article = document.createElement("article");
-                article.dataset._id = menuItem._id; //Ger articlen samma ID som jobberfarenheten
+                article.dataset._id = menuItem._id; // Ger articlen samma ID som menuItem
 
-                //Hämtar endast datumet(och inte tiden) från menuItem.created
+                // Hämtar endast datumet (och inte tiden) från menuItem.created
                 const datum = new Date(menuItem.created);
                 const formateratDatum = datum.toISOString().split('T')[0];
 
                 article.innerHTML = `
-                <h3><span class="name">${menuItem.name}</span></h3>
-                <p>Tillagd: ${formateratDatum}</p>
-                <p>Beskrivning: <span class="description">${menuItem.description}</span></p>
-                <p>Kategori: <span class="category">${menuItem.category}</span></p>
-                <p>Underkategori: <span class="subcategory">${menuItem.subcategory}</span></p>
-                <p><strong>Pris: <span class="price">${menuItem.price}</span></strong></p>
-                <button class="deleteBtn" type="button">Radera</button>
-                <button class="editBtn" type="button">Redigera</button>`;
+                    <h3><span class="name">${menuItem.name}</span></h3>
+                    <p>Tillagd: ${formateratDatum}</p>
+                    <p>Beskrivning: <span class="description">${menuItem.description}</span></p>
+                    <p>Kategori: <span class="category">${menuItem.category}</span></p>
+                    <p>Underkategori: <span class="subcategory">${menuItem.subcategory}</span></p>
+                    <p><strong>Pris: <span class="price">${menuItem.price}</span></strong></p>
+                    <button class="deleteBtn" type="button">Radera</button>
+                    <button class="editBtn" type="button">Redigera</button>`;
 
-                //Lägger till menyobjektet i min menuContainer
-                menuContainer.appendChild(article);
+                // Lägger till menyobjektet i rätt kategori-container
+                if (menuItem.category === "mat") {
+                    matContainer.appendChild(article);
+                } else if (menuItem.category === "dryck") {
+                    dryckContainer.appendChild(article);
+                } else if (menuItem.category === "dessert") {
+                    dessertContainer.appendChild(article);
+                }
 
-                //Lägger till eventListener för delete knappen i articlen
+                // Lägg till eventListener för delete-knappen i article
                 const deleteBtn = article.querySelector(".deleteBtn");
                 deleteBtn.addEventListener("click", () => deleteMenuItem(menuItem._id));
 
-                //Lägger till eventListener för redigera knappen i articlen
+                // Lägg till eventListener för edit-knappen i article
                 const editBtn = article.querySelector(".editBtn");
                 editBtn.addEventListener("click", () => {
                     const token = localStorage.getItem("token");
@@ -71,9 +77,9 @@ async function getData() {
                         const saveBtn = document.createElement("button");
                         saveBtn.textContent = "Spara";
                         saveBtn.classList.add("saveBtn");
-                        saveBtn.type = "button"
+                        saveBtn.type = "button";
 
-                        //Händelselyssnare för att spara ändringar
+                        // Händelselyssnare för att spara ändringar
                         saveBtn.addEventListener("click", () => {
                             const newItem = {
                                 name: article.querySelector(".editName").value,
@@ -81,7 +87,7 @@ async function getData() {
                                 price: article.querySelector(".editPrice").value,
                                 category: article.querySelector(".editCategory").value,
                                 subcategory: article.querySelector(".editSubcategory").value,
-                            }
+                            };
 
                             updateItem(article.dataset._id, newItem)
                                 .then(() => {
@@ -97,7 +103,7 @@ async function getData() {
                                 .catch(error => {
                                     console.error("Ett fel uppstod vid uppdatering av menyobjektet...", error);
 
-                                    //Återställer sidan med de gamla värdena om uppdateringen misslyckas
+                                    // Återställer sidan med de gamla värdena om uppdateringen misslyckas
                                     name.textContent = menuItem.name;
                                     description.textContent = menuItem.description;
                                     price.textContent = menuItem.price;
@@ -110,7 +116,7 @@ async function getData() {
                         });
                         article.appendChild(saveBtn);
                     } else {
-                        console.log("Logga in för att redigera ett menyobjekt.")
+                        console.log("Logga in för att redigera ett menyobjekt.");
                     }
                 });
             });
@@ -120,6 +126,7 @@ async function getData() {
         console.error("Något gick fel: ", error);
     }
 }
+
 
 //UPPDATERA ITEM!
 async function updateItem(itemId, newItem) {
@@ -240,20 +247,21 @@ function submitForm() {
     }
 
     //Använder formulärdatan och kör den i funktionen createWorkexperience
-    createMenuItem(name, category, price, description);
+    createMenuItem(name, category, subcategory, price, description);
 
     //rensar formuläret vid lyckat anrop
     form.reset();
 }
 
 //Skapar nytt menuItem
-async function createMenuItem(name, category, price, description) {
+async function createMenuItem(name, category, subcategory, price, description) {
 
     const url = "https://projektapi-backend2.onrender.com/api/menu";
 
     let menuItem = {
         name: name,
         category: category,
+        subcategory: subcategory,
         price: price,
         description: description
     }
