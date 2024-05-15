@@ -78,8 +78,8 @@ document.getElementById("dryckBtn").addEventListener("click", () => openMenu(eve
 document.getElementById("dessertBtn").addEventListener("click", () => openMenu(event, 'dessert'));
 
 //Bläddrar mellan menyerna
-function openMenu(evt, menuName) {
-    var i, tabcontent, tablinks;
+function openMenu(event, menuName) {
+    let i, tabcontent, tablinks;
     tabcontent = document.getElementsByClassName("tabcontent");
     for (i = 0; i < tabcontent.length; i++) {
         tabcontent[i].style.display = "none";
@@ -89,5 +89,5 @@ function openMenu(evt, menuName) {
         tablinks[i].className = tablinks[i].className.replace(" active", "");
     }
     document.getElementById(menuName).style.display = "block";
-    evt.currentTarget.className += " active";
+    event.currentTarget.className += " active";
 }
