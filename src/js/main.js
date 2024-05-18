@@ -2,6 +2,7 @@
 
 const token = localStorage.getItem("token");
 const editMenuEl = document.getElementById("editMenu");
+const editMenuEl2 = document.getElementById("editMenu2");
 const logInEl = document.getElementById("logIn");
 const logOutEl = document.getElementById("logOut");
 const menuLink = document.getElementById("menuLink");
@@ -51,12 +52,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (token) {
         editMenuEl.style.display = "block";
+        editMenuEl2.style.display = "block";
         logInEl.style.display = "none";
         logOutEl.style.display = "block";
         logOutEl.addEventListener("click", logOutUser);
 
     } else {
         editMenuEl.style.display = "none";
+        editMenuEl2.style.display = "none";
         logInEl.style.display = "block";
         logOutEl.style.display = "none";
     }

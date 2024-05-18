@@ -52,3 +52,21 @@ document.getElementById("loginForm").addEventListener("submit", async (event) =>
     }
 });
 
+//Funktion för min hamburgermeny
+const toggleMenu = document.getElementById("menuToggle");
+const toggleOff = document.getElementById("toggleOff");
+
+toggleMenu.addEventListener("click", toggleMobileMenu);
+toggleOff.addEventListener("click", toggleMobileMenu);
+
+function toggleMobileMenu() {
+    const mobileMenuEl = document.getElementById("mobileMenu");
+
+    if (mobileMenuEl.style.width === "0px" || mobileMenuEl.style.width === "") {
+        mobileMenuEl.style.width = "80%"; 
+    } else {
+        mobileMenuEl.style.width = "0px"; 
+    }
+}
+
+
