@@ -15,7 +15,7 @@ document.addEventListener("DOMContentLoaded", () => {
             const menuElement = document.getElementById("menu");
             const offset = 120;
             const elementPosition = menuElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition - offset;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
 
             window.scrollTo({
                 top: offsetPosition,
@@ -160,5 +160,19 @@ function openMenu(event, menuName) {
     event.currentTarget.className += " active";
 }
 
-//Funktion för karta
-let map = L.map('map').setView([51.505, -0.09], 13);
+//Funktion för min hamburgermeny
+const toggleMenu = document.getElementById("menuToggle");
+const toggleOff = document.getElementById("toggleOff");
+
+toggleMenu.addEventListener("click", toggleMobileMenu);
+toggleOff.addEventListener("click", toggleMobileMenu);
+
+function toggleMobileMenu() {
+    const mobileMenuEl = document.getElementById("mobileMenu");
+
+    if (mobileMenuEl.style.width === "0px" || mobileMenuEl.style.width === "") {
+        mobileMenuEl.style.width = "80%"; 
+    } else {
+        mobileMenuEl.style.width = "0px"; 
+    }
+}
