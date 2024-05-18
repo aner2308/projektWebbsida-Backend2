@@ -20,6 +20,7 @@ h2 {
 }
 
 .header {
+    z-index: 3;
     overflow: hidden;
     position: fixed;
     top: 0;
@@ -120,23 +121,67 @@ a img:hover {
 }
 
 #trayImg {
-    grid-area: 3/1/4/3;
-    margin-top: 50px;
+    grid-area: 4/1/5/3;
+    text-align: center;
 }
 
 #trayImg img {
+    width: 80%;
+    margin-bottom: 50px;
+    box-shadow: 0 0 10px #3a3a3a;
+}
+
+#shopImg {
+    grid-area: 5/1/6/5;
+    position: relative;
+}
+
+#shopImg img {
     width: 100%;
+    z-index: 1;
+}
+
+#shopRubrik {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
+    font-size: 5vw;
+    z-index: 2;
+    color: whitesmoke;
+    grid-area: 5/1;
+}
+
+
+#aboutUs {
+    grid-area: 4/3/5/5;
+}
+
+#aboutUs h2 {
+    font-size: 2.8em;
+}
+
+#aboutUs p {
+    font-size: 1.6em;
+    width: 80%;
+    margin: 0 auto;
+    max-width: 400px;
+    line-height: 1.6em;
 }
 
 #menu {
-    grid-area: 4/1/5/5;
+    grid-area: 3/1/4/5;
     width: 80%;
     max-width: 900px;
     height: auto;
-    margin: 0 auto;
+    margin: 100px auto;
     background-image: url("/src/img/rice\ menu\ big.jpg");
-    background-size: cover;
-    background-repeat: no-repeat;
+    background-position: top;
+    background-size: 900px;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
+    border-top-right-radius: 30px;
+
 }
 
 #menu h2 {
@@ -179,14 +224,12 @@ a img:hover {
     background-image: none;
 }
 
-.tabcontent#mat {
-    display: block;
+.tabcontent h4 {
+    font-size: 2em;
 }
 
-#menuContainer {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+.tabcontent#mat {
+    display: block;
 }
 
 .tabcontent article {
@@ -199,10 +242,53 @@ a img:hover {
     box-sizing: border-box;
 }
 
+#findUs {
+    margin-bottom: 50px;
+}
+
+#findUs h2 {
+    font-size: 2.8em;
+}
+
+#findUs p {
+    font-size: 1.6em;
+    width: 80%;
+    margin: 0 auto;
+    text-align: center;
+    max-width: 400px;
+    line-height: 1.6em;
+}
+
 #map {
     height: 30vw;
     width: 50vw;
     margin: 50px auto;
+}
+
+footer {
+    background-color: black;
+    color: whitesmoke;
+    height: 90px;
+    position: relative;
+    text-align: center;
+}
+
+footer .logInOutLinks {
+    color: whitesmoke;
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    padding: 10px;
+    font-size: 1.6em;
+}
+
+footer p {
+    font-size: 1.6em;
+    color: whitesmoke;
+}
+
+footer p a {
+    color: whitesmoke;
 }
 
 

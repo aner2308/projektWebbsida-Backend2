@@ -1,12 +1,53 @@
 "use strict";
 
-
 const token = localStorage.getItem("token");
 const editMenuEl = document.getElementById("editMenu");
 const logInEl = document.getElementById("logIn");
 const logOutEl = document.getElementById("logOut");
+const menuLink = document.getElementById("menuLink");
+const aboutLink = document.getElementById("aboutLink");
+const findUsLink = document.getElementById("findUsLink");
 
 document.addEventListener("DOMContentLoaded", () => {
+
+        menuLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            const menuElement = document.getElementById("menu");
+            const offset = 120;
+            const elementPosition = menuElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        });
+
+        aboutLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            const aboutElement = document.getElementById("aboutUs");
+            const offset = 120;
+            const elementPosition = aboutElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        });
+
+        findUsLink.addEventListener("click", (event) => {
+            event.preventDefault();
+            const findUsElement = document.getElementById("findUs");
+            const offset = 120;
+            const elementPosition = findUsElement.getBoundingClientRect().top;
+            const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: "smooth"
+            });
+        });
 
     if (token) {
         editMenuEl.style.display = "block";
@@ -35,27 +76,57 @@ async function getData() {
         const dryckContainer = document.getElementById("dryck");
         const dessertContainer = document.getElementById("dessert");
 
-
         if (response.ok) {
-            //Loopa igenom datan och skapa article- element för varje jobberfrenhet
-            data.forEach(menuItem => {
-                const article = document.createElement("article");
-                article.dataset._id = menuItem._id; //Ger articlen samma ID som jobberfarenheten
-                article.innerHTML = `
-                <h3>${menuItem.name}</h3>
-                <p>${menuItem.description}</p>
-                <p><strong>Pris: ${menuItem.price}</strong></p>
-                `;
+            // Skapa ett objekt för att lagra menyobjekt grupperade efter kategori och subkategori
+            const menuData = {
+                mat: {},
+                dryck: {},
+                dessert: {}
+            };
 
-                // Lägger till menyobjektet i rätt kategori-container
-                if (menuItem.category === "mat") {
-                    matContainer.appendChild(article);
-                } else if (menuItem.category === "dryck") {
-                    dryckContainer.appendChild(article);
-                } else if (menuItem.category === "dessert") {
-                    dessertContainer.appendChild(article);
+            // Gruppera menyobjekt efter kategori och subkategori
+            data.forEach(menuItem => {
+                if (!menuData[menuItem.category][menuItem.subcategory]) {
+                    menuData[menuItem.category][menuItem.subcategory] = [];
                 }
+                menuData[menuItem.category][menuItem.subcategory].push(menuItem);
             });
+
+            // Funktion för att skapa artikel-element för varje menyobjekt
+            const createMenuItemElement = (menuItem) => {
+                const article = document.createElement("article");
+                article.dataset._id = menuItem._id;
+                article.innerHTML = `
+                    <h3>${menuItem.name}</h3>
+                    <p>${menuItem.description}</p>
+                    <p><strong>Pris: ${menuItem.price}</strong></p>
+                `;
+                return article;
+            };
+
+            // Funktion för att skapa subkategori-sektioner
+            const createSubcategorySection = (subcategoryName, items) => {
+                const section = document.createElement("section");
+                const header = document.createElement("h4");
+                header.textContent = subcategoryName;
+                section.appendChild(header);
+                items.forEach(item => section.appendChild(createMenuItemElement(item)));
+                return section;
+            };
+
+            // Lägg till menyobjekt i respektive kategori-container
+            for (const category in menuData) {
+                for (const subcategory in menuData[category]) {
+                    const section = createSubcategorySection(subcategory, menuData[category][subcategory]);
+                    if (category === "mat") {
+                        matContainer.appendChild(section);
+                    } else if (category === "dryck") {
+                        dryckContainer.appendChild(section);
+                    } else if (category === "dessert") {
+                        dessertContainer.appendChild(section);
+                    }
+                }
+            }
         }
 
     } catch (error) {
@@ -65,17 +136,14 @@ async function getData() {
 
 //logga ut admin
 function logOutUser() {
-    // Ta bort token från localStorage
     localStorage.removeItem("token");
-
-    // Återgå till startsidan
     location.reload();
 }
 
 //Hämtar in knapparna för mina matflikar
-document.getElementById("matBtn").addEventListener("click", () => openMenu(event, 'mat'));
-document.getElementById("dryckBtn").addEventListener("click", () => openMenu(event, 'dryck'));
-document.getElementById("dessertBtn").addEventListener("click", () => openMenu(event, 'dessert'));
+document.getElementById("matBtn").addEventListener("click", (event) => openMenu(event, 'mat'));
+document.getElementById("dryckBtn").addEventListener("click", (event) => openMenu(event, 'dryck'));
+document.getElementById("dessertBtn").addEventListener("click", (event) => openMenu(event, 'dessert'));
 
 //Bläddrar mellan menyerna
 function openMenu(event, menuName) {
@@ -91,3 +159,6 @@ function openMenu(event, menuName) {
     document.getElementById(menuName).style.display = "block";
     event.currentTarget.className += " active";
 }
+
+//Funktion för karta
+let map = L.map('map').setView([51.505, -0.09], 13);
