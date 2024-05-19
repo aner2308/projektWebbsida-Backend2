@@ -11,6 +11,12 @@ body {
     font-size: 62.5%;
 }
 
+#adminPage {
+background-image: url("/src/img/adminBackground.jpg");
+background-size: cover;
+background-position: top;
+}
+
 h1 {
     text-align: center;
 }
@@ -226,8 +232,9 @@ a img:hover {
 
 #aboutUs p {
     font-size: 1.6em;
-    width: 80%;
+    width: 90%;
     margin: 0 auto;
+    margin-bottom: 50px;
     max-width: 400px;
     line-height: 1.6em;
 }
@@ -244,13 +251,107 @@ a img:hover {
     overflow: hidden;
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.4);
     border-top-right-radius: 30px;
+    font-size: 1.6em;
 
+}
+
+#menuFormAdmin {
+    width: 95%;
+    max-width: 400px;
+    margin: 50 auto;
+    padding: 20px;
+    background-color: rgba(245, 245, 245, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+#menuContainerAdmin {
+    display: grid;
+    width: 95%;
+    margin: 0 auto;
+    margin-bottom: 100px;
+    grid-template-columns: 5% 30% 30% 30% 5%;
+    max-width: 900px;
+    background-color: rgba(58, 58, 58, 0.8);
+    border-radius: 15px;
+}
+
+#menuAdmin h2 {
+    grid-area: 1/1/2/6;
+    font-size: 2.8em;
+}
+
+#menuAdmin #matRubrik {
+    grid-area: 2/2/3/3;
+    text-align: center;
+    font-size: 2.4em;
+    color: whitesmoke;
+}
+#menuAdmin #dryckRubrik {
+    grid-area: 2/3/3/4;
+    text-align: center;
+    font-size: 2.4em;
+    color: whitesmoke;
+
+}
+#menuAdmin #dessertRubrik {
+    grid-area: 2/4/3/5;
+    text-align: center;
+    font-size: 2.4em;
+    color: whitesmoke;
+
+}
+
+.matAdmin {
+    grid-area: 3/2/4/3;
+}
+
+.dryckAdmin {
+    grid-area: 3/3/4/4;
+}
+
+.dessertAdmin {
+    grid-area: 3/4/4/5;
+}
+
+#menuContainerAdmin article{
+    background-color: rgba(245, 245, 245, 0.8);
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    margin: 5px;
+    padding: 15px;
+    font-size: 1.6em;
+}
+
+#menuContainerAdmin button{
+    background-color: #3a3a3a;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    color: whitesmoke;
+    border-radius: 10px;
+    padding: 14px 10px;
+    transition: 0.3s;
+    margin-bottom: 5px;
+    font-size: 17px;
+}
+
+#menuContainerAdmin button:hover {
+    background-color: #c20000;
+}
+
+#menuContainerAdmin input{
+    font-size: 1rem;
 }
 
 #menu h2 {
     color: #3a3a3a;
     font-size: 2.8em;
     font-weight: 100;
+}
+
+#menuContainer {
+    display: flex;
 }
 
 .tabs {
@@ -285,23 +386,23 @@ a img:hover {
     padding: 20px;
     border-top: none;
     background-image: none;
+    width: 100%;
 }
 
 .tabcontent h4 {
     font-size: 2em;
 }
 
-.tabcontent#mat {
-    display: block;
-}
-
 .tabcontent article {
+    display: inline-block;
+    height: 180px;
     background: rgba(245, 245, 245, 0.9);
-    padding: 15px;
-    margin: 5px 0px;
+    padding: 5px;
+    padding-bottom: 0;
+    margin: 1%;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    width: 100%;
+    width: 48%;
     box-sizing: border-box;
 }
 
@@ -339,7 +440,7 @@ footer {
 footer .logInOutLinks {
     color: whitesmoke;
     position: absolute;
-    bottom: 0;
+    top: 0;
     right: 0;
     padding: 10px;
     font-size: 1.6em;
@@ -379,7 +480,7 @@ footer p a {
     transform: translate(-50%, 50%);
 }
 
-#loginForm label {
+label {
     font-size: 1.6em;
 }
 
@@ -389,12 +490,35 @@ footer p a {
     font-size: 2.8em;
 }
 
-input[type="text"],
-input[type="password"] {
+input {
     font-size: 1.6em;
+    width: 200px;
+    padding: 5px;
     border-style: none;
-    background-color: #3a3a3a;
+    background-color: whitesmoke;
     box-shadow: inset 0 0 5px #3a3a3a;
+
+}
+
+select {
+    font-size: 1.6em;
+    width: 100px;
+    padding: 5px 0;
+    border-style: none;
+    background-color: whitesmoke;
+    box-shadow: inset 0 0 5px #3a3a3a;
+
+}
+
+textarea {
+    font-size: 1.6em;
+    width: 200px;
+    height: 100px;
+    padding: 5px 0;
+    border-style: none;
+    background-color: whitesmoke;
+    box-shadow: inset 0 0 5px #3a3a3a;
+
 }
 
 #loginForm button {
@@ -413,10 +537,128 @@ input[type="password"] {
     background-color: #c20000;
 }
 
+@media screen and (max-width: 750px) {
 
-@media screen and (max-width: 610px) {
+    .tabcontent article {
+        display: block;
+        padding-left: 15px;
+        width: 90%;
+        margin: 5 auto;
+        }
+
+        #trayImg {
+            grid-area: 4/1/5/5;
+            text-align: center;
+        }
+        
+        #trayImg img {
+            width: 80%;
+            margin-bottom: 50px;
+            box-shadow: 0 0 10px #3a3a3a;
+        }
+        
+        #shopImg {
+            grid-area: 6/1/7/5;
+            position: relative;
+        }
+        
+        #shopImg img {
+            width: 100%;
+            z-index: 1;
+        }
+        
+        #shopRubrik {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            margin: 20px;
+            font-size: 5vw;
+            z-index: 2;
+            color: whitesmoke;
+            grid-area: 6/1;
+        }
+
+        #aboutUs {
+            grid-area: 5/1/6/5;
+        }
+
+        #menuAdmin #matRubrik {
+            grid-area: 2/1/3/6;
+            text-align: center;
+            font-size: 2.4em;
+            color: whitesmoke;
+        }
+        #menuAdmin #dryckRubrik {
+            grid-area: 4/1/5/6;
+            text-align: center;
+            font-size: 2.4em;
+            color: whitesmoke;
+        
+        }
+        #menuAdmin #dessertRubrik {
+            grid-area: 6/1/7/6;
+            text-align: center;
+            font-size: 2.4em;
+            color: whitesmoke;
+        
+        }
+        
+        .matAdmin {
+            grid-area: 3/1/4/6;
+        }
+        
+        .dryckAdmin {
+            grid-area: 5/1/6/6;
+        }
+        
+        .dessertAdmin {
+            grid-area: 7/1/8/6;
+        }
+
+}
+
+@media screen and (max-width: 630px) {
+
+    #introText {
+        display: block;
+        width: 100%;
+        grid-area: 2/1/3/5;
+        background-color: white;
+        color: black;
+    }
+
+    #h2Intro {
+        color: #3a3a3a;
+        margin: 0 auto;
+        margin-top: 50px;
+        width: 80%;
+    }
+
+    #textIntro {
+        color: #3a3a3a;
+        margin: 0 auto;
+        width: 95%;
+        max-width: 400px;
+        height: auto;
+    }
+
+    #headerImg {
+        grid-area: 1/1/2/5;
+        background-image: url('/src/img/Sushi\ header.jpg');
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: cover;
+        box-shadow: inset 0 0 30px black, 0 0 30px black;
+        width: 100%;
+        height: 200px;
+    }
+    
+    #black {
+        display: none;
+    }
 
     #menu {
+        margin-top: 0;
         width: 90%;
         background-image: url("/src/img/rice\ menu\ small.jpg");
     }
@@ -433,5 +675,10 @@ input[type="password"] {
     #menuToggle {
         display: block;
     }
+
+    .tabcontent article {
+        padding-left: 15px;
+        width: 100%;
+        }
 
 }

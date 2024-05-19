@@ -34,11 +34,11 @@ async function getData() {
 
                 article.innerHTML = `
                     <h3><span class="name">${menuItem.name}</span></h3>
-                    <p>Tillagd: ${formateratDatum}</p>
-                    <p>Beskrivning: <span class="description">${menuItem.description}</span></p>
-                    <p>Kategori: <span class="category">${menuItem.category}</span></p>
-                    <p>Underkategori: <span class="subcategory">${menuItem.subcategory}</span></p>
-                    <p><strong>Pris: <span class="price">${menuItem.price}</span></strong></p>
+                    <p><strong>Tillagd: </strong>${formateratDatum}</p>
+                    <p><strong>Beskrivning: </strong><span class="description">${menuItem.description}</span></p>
+                    <p><strong>Kategori: </strong><span class="category">${menuItem.category}</span></p>
+                    <p><strong>Underkategori: </strong><span class="subcategory">${menuItem.subcategory}</span></p>
+                    <p><strong>Pris: </strong><span class="price">${menuItem.price}</span></p>
                     <button class="deleteBtn" type="button">Radera</button>
                     <button class="editBtn" type="button">Redigera</button>`;
 
@@ -125,6 +125,17 @@ async function getData() {
     } catch (error) {
         console.error("Något gick fel: ", error);
     }
+}
+
+
+
+//logga ut admin
+const logOutEl = document.getElementById("logOut");
+logOutEl.addEventListener("click", logOutUser);
+
+function logOutUser() {
+    localStorage.removeItem("token");
+    location.reload();
 }
 
 
@@ -280,4 +291,20 @@ async function createMenuItem(name, category, subcategory, price, description) {
 
 }
 
+//Funktion för min hamburgermeny
+const toggleMenu = document.getElementById("menuToggle");
+const toggleOff = document.getElementById("toggleOff");
+
+toggleMenu.addEventListener("click", toggleMobileMenu);
+toggleOff.addEventListener("click", toggleMobileMenu);
+
+function toggleMobileMenu() {
+    const mobileMenuEl = document.getElementById("mobileMenu");
+
+    if (mobileMenuEl.style.width === "0px" || mobileMenuEl.style.width === "") {
+        mobileMenuEl.style.width = "80%"; 
+    } else {
+        mobileMenuEl.style.width = "0px"; 
+    }
+}
 

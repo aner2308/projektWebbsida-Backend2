@@ -5,51 +5,42 @@ const editMenuEl = document.getElementById("editMenu");
 const editMenuEl2 = document.getElementById("editMenu2");
 const logInEl = document.getElementById("logIn");
 const logOutEl = document.getElementById("logOut");
-const menuLink = document.getElementById("menuLink");
-const aboutLink = document.getElementById("aboutLink");
-const findUsLink = document.getElementById("findUsLink");
+
+//Länkarna i mina menyer
+const links = [
+    { link: "menuLink", target: "menu" },
+    { link: "aboutLink", target: "aboutUs" },
+    { link: "findUsLink", target: "findUs" },
+    { link: "menuLink2", target: "menu" },
+    { link: "aboutLink2", target: "aboutUs" },
+    { link: "findUsLink2", target: "findUs" }
+];
 
 document.addEventListener("DOMContentLoaded", () => {
 
-        menuLink.addEventListener("click", (event) => {
-            event.preventDefault();
-            const menuElement = document.getElementById("menu");
-            const offset = 120;
-            const elementPosition = menuElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+    //Scrollfunktion till rätt rubrik på min webbsida
+    const offset = 120;
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
+    function scrollToElement(event, targetId) {
+        event.preventDefault();
+        const targetElement = document.getElementById(targetId);
+        const elementPosition = targetElement.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - offset;
+
+        window.scrollTo({
+            top: offsetPosition,
+            behavior: "smooth"
         });
+    }
 
-        aboutLink.addEventListener("click", (event) => {
-            event.preventDefault();
-            const aboutElement = document.getElementById("aboutUs");
-            const offset = 120;
-            const elementPosition = aboutElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
+    links.forEach(({ link, target }) => {
+        const element = document.getElementById(link);
+        if (element) {
+            element.addEventListener("click", (event) => scrollToElement(event, target));
+        }
+    });
 
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
-        });
-
-        findUsLink.addEventListener("click", (event) => {
-            event.preventDefault();
-            const findUsElement = document.getElementById("findUs");
-            const offset = 120;
-            const elementPosition = findUsElement.getBoundingClientRect().top;
-            const offsetPosition = elementPosition + window.pageYOffset - offset;
-
-            window.scrollTo({
-                top: offsetPosition,
-                behavior: "smooth"
-            });
-        });
-
+    // Döljer/visar objekt beroende på om man har token
     if (token) {
         editMenuEl.style.display = "block";
         editMenuEl2.style.display = "block";
@@ -174,8 +165,8 @@ function toggleMobileMenu() {
     const mobileMenuEl = document.getElementById("mobileMenu");
 
     if (mobileMenuEl.style.width === "0px" || mobileMenuEl.style.width === "") {
-        mobileMenuEl.style.width = "80%"; 
+        mobileMenuEl.style.width = "80%";
     } else {
-        mobileMenuEl.style.width = "0px"; 
+        mobileMenuEl.style.width = "0px";
     }
 }
