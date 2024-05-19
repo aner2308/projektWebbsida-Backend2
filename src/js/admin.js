@@ -236,7 +236,7 @@ submitBtn.addEventListener("click", submitForm)
 
 //Funktion för att lägga till data till API/server från formuläret
 function submitForm() {
-    const form = document.getElementById("menuForm");
+    const form = document.getElementById("menuFormAdmin");
     const formData = new FormData(form);
 
     //Hämta väg till felmeddelande
