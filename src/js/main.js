@@ -31,6 +31,24 @@ document.addEventListener("DOMContentLoaded", () => {
             top: offsetPosition,
             behavior: "smooth"
         });
+
+        // Hantera klassändring på mina länkar
+        setActiveLink(event.currentTarget);
+    }
+
+    function setActiveLink(clickedElement) {
+        // Ta bort "active" klassen från alla länkar
+        links.forEach(({ link }) => {
+            const element = document.getElementById(link);
+            if (element) {
+                element.classList.remove("active");
+                element.classList.add("notActive");
+            }
+        });
+
+        // Lägg till "active" klassen till den klickade länken
+        clickedElement.classList.add("active");
+        clickedElement.classList.remove("notActive");
     }
 
     links.forEach(({ link, target }) => {
@@ -169,4 +187,26 @@ function toggleMobileMenu() {
     } else {
         mobileMenuEl.style.width = "0px";
     }
+}
+
+//Funktion för scroll to top-knappen
+//Länkar knappen till nytt element
+let myButtonEl = document.getElementById("topBtn");
+myButtonEl.addEventListener('click', topFunction)
+
+//Tar fram knappen när man scrollat ner 20px
+window.onscroll = function() {scrollFunction()};
+
+function scrollFunction() {
+  if (document.body.scrollTop > 20 || document.documentElement.scrollTop > 20) {
+    myButtonEl.style.display = "block";
+  } else {
+    myButtonEl.style.display = "none";
+  }
+}
+
+//Går till toppen av sidan när användare klickar på knappen
+function topFunction() {
+  document.body.scrollTop = 0; //Safari
+  document.documentElement.scrollTop = 0; //Chrome, Firefox, IE and Opera
 }

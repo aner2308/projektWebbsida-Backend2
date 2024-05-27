@@ -40,7 +40,7 @@ document.getElementById("loginForm").addEventListener("submit", async (event) =>
             const referer = sessionStorage.getItem("referer") || document.referrer;
 
             // Om det finns en refererande sida, gå tillbaka dit, annars till index.html
-            window.location.href = referer || "index.html";
+            window.location.href = "admin.html";
         } else {
             // Hantera misslyckad inloggning
             alert("Fel användarnamn eller lösenord!");
